@@ -2,906 +2,785 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PKKMB 2026 • Name Tag Editor</title>
 
-<title>Editor Name Tag PKKMB 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
-*{
-  box-sizing:border-box;
+:root{
+  --bg:#08110c;
+  --panel:#101c15;
+  --panel2:#15251b;
+  --line:#2b4033;
+  --gold:#f2c522;
+  --text:#f4f7f4;
+  --muted:#aab7ae;
 }
+
+*{box-sizing:border-box}
 
 body{
   margin:0;
-  background:#101b14;
-  color:white;
-  font-family:Arial,sans-serif;
+  background:radial-gradient(circle at top,#183225 0,#08110c 55%);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-.container{
-  max-width:900px;
+.app{
+  max-width:1180px;
   margin:auto;
-  padding:20px;
-}
-
-h1{
-  text-align:center;
-  margin:5px 0 20px;
-  font-size:25px;
-}
-
-.editor{
-  background:#17251c;
   padding:18px;
-  border-radius:15px;
+}
+
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.brand{
+  font-weight:900;
+  font-size:20px;
+  letter-spacing:-.4px;
+}
+
+.brand span{color:var(--gold)}
+
+.badge{
+  font-size:12px;
+  color:#172014;
+  background:var(--gold);
+  padding:7px 10px;
+  border-radius:999px;
+  font-weight:800;
+}
+
+.layout{
+  display:grid;
+  grid-template-columns:350px 1fr;
+  gap:18px;
+  align-items:start;
+}
+
+.panel{
+  background:rgba(16,28,21,.94);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 16px 45px rgba(0,0,0,.28);
+}
+
+.section{
+  padding-bottom:16px;
+  margin-bottom:16px;
+  border-bottom:1px solid var(--line);
+}
+
+.section:last-child{
+  border:0;
+  margin:0;
+  padding:0;
+}
+
+.section h2{
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.9px;
+  margin:0 0 11px;
+  color:#dbe5de;
 }
 
 label{
   display:block;
-  margin-top:12px;
-  margin-bottom:5px;
-  font-weight:bold;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  margin:10px 0 6px;
 }
 
 input[type=text],
 input[type=file]{
   width:100%;
-  padding:11px;
-  border-radius:8px;
-  border:1px solid #526358;
-  background:#0e1712;
-  color:white;
+  background:#0a130e;
+  color:#fff;
+  border:1px solid #304739;
+  border-radius:10px;
+  padding:11px 12px;
+  outline:none;
 }
 
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+input[type=text]:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(242,197,34,.12);
 }
 
-.control{
-  margin-top:12px;
+.upload{
+  border:1px dashed #587062;
+  background:#0b160f;
+  padding:12px;
+  border-radius:12px;
 }
 
-.control-title{
+.slider{margin-top:10px}
+
+.sliderTop{
   display:flex;
   justify-content:space-between;
-  font-size:14px;
+  font-size:12px;
+  color:var(--muted);
   margin-bottom:5px;
 }
 
 input[type=range]{
   width:100%;
+  accent-color:var(--gold);
 }
 
-.buttons{
+.btns{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:15px;
+  gap:9px;
+  margin-top:12px;
 }
 
 button{
   border:0;
+  border-radius:11px;
   padding:12px;
-  border-radius:9px;
-  font-weight:bold;
+  font-weight:850;
   cursor:pointer;
 }
 
-.reset{
-  background:#555;
-  color:white;
+.secondary{
+  background:#26352c;
+  color:#fff;
 }
 
-.download{
-  background:#e4bd24;
+.primary{
+  background:var(--gold);
   color:#111;
 }
 
-.canvas-wrap{
-  margin-top:20px;
-  background:#080d0a;
-  padding:12px;
-  border-radius:15px;
-  text-align:center;
-}
-
-canvas{
-  width:100%;
-  max-width:600px;
-  height:auto;
-  display:block;
-  margin:auto;
-  touch-action:none;
-  border-radius:5px;
-}
-
-.info{
-  font-size:13px;
-  opacity:.75;
-  text-align:center;
+.tip{
+  font-size:12px;
+  line-height:1.45;
+  color:var(--muted);
   margin-top:10px;
 }
 
-@media(max-width:600px){
-  .row{
-    grid-template-columns:1fr;
-  }
+.stage{
+  display:flex;
+  justify-content:center;
+  background:#050a07;
+  border:1px solid #1c2c22;
+  border-radius:18px;
+  padding:16px;
+  min-height:70vh;
+}
 
-  .container{
-    padding:10px;
-  }
+#card{
+  position:relative;
+  width:min(100%,600px);
+  aspect-ratio:1024/1536;
+  overflow:hidden;
+  background:#111;
+  border-radius:8px;
+  box-shadow:0 25px 70px rgba(0,0,0,.45);
+}
+
+#template{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:fill;
+  z-index:1;
+  user-select:none;
+}
+
+#photoFrame{
+  position:absolute;
+  left:25.98%;
+  top:20.50%;
+  width:47.85%;
+  height:42.32%;
+  overflow:hidden;
+  z-index:2;
+  touch-action:none;
+}
+
+#photo{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:auto;
+  height:auto;
+  max-width:none;
+  transform:translate(-50%,-50%);
+  user-select:none;
+  pointer-events:none;
+}
+
+#paperPatch{
+  position:absolute;
+  left:37.1%;
+  top:66.0%;
+  width:42.8%;
+  height:13.4%;
+  z-index:3;
+  background-image:url("8B740CBE-CECD-44A7-A31E-067C7C106C3D(3).jpeg");
+  background-repeat:no-repeat;
+  background-size:100% 100%;
+  opacity:.99;
+}
+
+.value{
+  position:absolute;
+  z-index:4;
+  left:38.7%;
+  color:#111;
+  font-weight:800;
+  font-size:clamp(12px,2.75vw,29px);
+  line-height:1;
+  white-space:nowrap;
+  font-family:Arial,sans-serif;
+  pointer-events:none;
+}
+
+#vNama{top:68.15%}
+#vSekolah{top:71.25%}
+#vProdi{top:74.35%}
+#vRegu{top:77.45%}
+
+#emptyPhoto{
+  position:absolute;
+  z-index:5;
+  left:27%;
+  top:42%;
+  width:46%;
+  text-align:center;
+  color:#fff;
+  background:rgba(0,0,0,.42);
+  padding:8px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+@media(max-width:850px){
+  .layout{grid-template-columns:1fr}
+  .stage{min-height:0}
+  .panel{order:2}
+}
+
+@media(max-width:520px){
+  .app{padding:10px}
+  .stage{padding:8px;border-radius:14px}
+  .panel{padding:13px}
+  .row{grid-template-columns:1fr}
+  .brand{font-size:17px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="app">
 
-<h1>EDITOR NAME TAG PKKMB 2026</h1>
+<header>
+  <div class="brand">PKKMB <span>2026</span> • Name Tag Editor</div>
+  <div class="badge">UNMURA</div>
+</header>
 
-<div class="editor">
+<div class="layout">
 
-<div class="row">
+<aside class="panel">
 
-<div>
-<label>Nama</label>
-<input id="nama" type="text" value="alvin imanullah">
-</div>
+<div class="section">
+  <h2>Template</h2>
 
-<div>
-<label>Asal Sekolah</label>
-<input id="sekolah" type="text" value="Sma Nusa Lubuklinggau">
-</div>
+  <label>Ganti template (opsional)</label>
 
-<div>
-<label>Prodi</label>
-<input id="prodi" type="text" value="Ilmu Komputer">
-</div>
-
-<div>
-<label>Nama Regu</label>
-<input id="regu" type="text" value="Sungai Kesie">
-</div>
-
-</div>
-
-<label>Foto</label>
-<input id="fotoInput" type="file" accept="image/*">
-
-<div class="control">
-  <div class="control-title">
-    <span>Zoom Foto</span>
-    <span id="zoomValue">1.00</span>
+  <div class="upload">
+    <input id="templateInput" type="file" accept="image/*">
   </div>
-  <input id="zoom" type="range" min="0.50" max="2.50" step="0.01" value="1">
-</div>
 
-<div class="control">
-  <div class="control-title">
-    <span>Kiri / Kanan</span>
-    <span id="xValue">0</span>
+  <div class="tip">
+    Template default tetap template PKKMB UNMURA.
+    Kalau nanti desain berubah, tinggal upload template baru.
   </div>
-  <input id="offsetX" type="range" min="-350" max="350" value="0">
 </div>
 
-<div class="control">
-  <div class="control-title">
-    <span>Atas / Bawah</span>
-    <span id="yValue">0</span>
+
+<div class="section">
+
+  <h2>Data peserta</h2>
+
+  <label>Nama</label>
+  <input id="nama" type="text" value="alvin imanullah">
+
+  <label>Asal Sekolah</label>
+  <input id="sekolah" type="text" value="Sma Nusa Lubuklinggau">
+
+  <label>Prodi</label>
+  <input id="prodi" type="text" value="Ilmu Komputer">
+
+  <label>Nama Regu</label>
+  <input id="regu" type="text" value="Sungai Kesie">
+
+</div>
+
+
+<div class="section">
+
+  <h2>Foto</h2>
+
+  <div class="upload">
+    <input id="photoInput" type="file" accept="image/*">
   </div>
-  <input id="offsetY" type="range" min="-350" max="350" value="0">
+
+  <div class="slider">
+    <div class="sliderTop">
+      <span>Zoom</span>
+      <b id="zoomOut">1.00×</b>
+    </div>
+
+    <input id="zoom"
+      type="range"
+      min=".5"
+      max="2.5"
+      step=".01"
+      value="1">
+  </div>
+
+  <div class="slider">
+    <div class="sliderTop">
+      <span>Kiri / kanan</span>
+      <b id="xOut">0</b>
+    </div>
+
+    <input id="x"
+      type="range"
+      min="-350"
+      max="350"
+      value="0">
+  </div>
+
+  <div class="slider">
+    <div class="sliderTop">
+      <span>Atas / bawah</span>
+      <b id="yOut">0</b>
+    </div>
+
+    <input id="y"
+      type="range"
+      min="-350"
+      max="350"
+      value="0">
+  </div>
+
+  <div class="btns">
+    <button class="secondary" id="reset">
+      Reset foto
+    </button>
+
+    <button class="primary" id="download">
+      Download PNG
+    </button>
+  </div>
+
+  <div class="tip">
+    Di HP, foto juga bisa digeser langsung dengan jari pada area foto.
+  </div>
+
 </div>
 
-<div class="buttons">
-  <button class="reset" onclick="resetFoto()">Reset Foto</button>
-  <button class="download" onclick="downloadPNG()">Download PNG</button>
-</div>
+</aside>
+
+
+<main class="stage">
+
+<div id="card">
+
+  <img
+    id="template"
+    src="8B740CBE-CECD-44A7-A31E-067C7C106C3D(3).jpeg"
+    crossorigin="anonymous">
+
+  <div id="photoFrame">
+    <img id="photo">
+  </div>
+
+  <div id="paperPatch"></div>
+
+  <div class="value" id="vNama">
+    alvin imanullah
+  </div>
+
+  <div class="value" id="vSekolah">
+    Sma Nusa Lubuklinggau
+  </div>
+
+  <div class="value" id="vProdi">
+    Ilmu Komputer
+  </div>
+
+  <div class="value" id="vRegu">
+    Sungai Kesie
+  </div>
+
+  <div id="emptyPhoto">
+    Pilih foto untuk mulai
+  </div>
 
 </div>
 
-<div class="canvas-wrap">
-<canvas id="canvas" width="1024" height="1536"></canvas>
-</div>
-
-<div class="info">
-Geser foto langsung di gambar atau gunakan slider.
-</div>
+</main>
 
 </div>
+</div>
+
 
 <script>
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const $ = id => document.getElementById(id);
 
-const namaInput = document.getElementById("nama");
-const sekolahInput = document.getElementById("sekolah");
-const prodiInput = document.getElementById("prodi");
-const reguInput = document.getElementById("regu");
+const card = $("card");
+const template = $("template");
+const photo = $("photo");
+const empty = $("emptyPhoto");
 
-const fotoInput = document.getElementById("fotoInput");
-
-const zoomSlider = document.getElementById("zoom");
-const offsetXSlider = document.getElementById("offsetX");
-const offsetYSlider = document.getElementById("offsetY");
-
-const zoomValue = document.getElementById("zoomValue");
-const xValue = document.getElementById("xValue");
-const yValue = document.getElementById("yValue");
-
-
-/* =========================================================
-   TEMPLATE
-========================================================= */
-
-const template = new Image();
-
-template.src =
-  "8B740CBE-CECD-44A7-A31E-067C7C106C3D.png";
-
-template.onerror = function(){
-
-  /* fallback apabila file yang tersimpan adalah JPEG */
-
-  template.src =
-    "8B740CBE-CECD-44A7-A31E-067C7C106C3D(3).jpeg";
-
+const inputs = {
+  nama: $("nama"),
+  sekolah: $("sekolah"),
+  prodi: $("prodi"),
+  regu: $("regu")
 };
 
-template.onload = function(){
-  draw();
+const vals = {
+  nama: $("vNama"),
+  sekolah: $("vSekolah"),
+  prodi: $("vProdi"),
+  regu: $("vRegu")
 };
 
+let photoUrl = "";
+let zoom = 1;
+let px = 0;
+let py = 0;
 
-/* =========================================================
-   FOTO USER
-========================================================= */
-
-const userPhoto = new Image();
-
-let hasPhoto = false;
-
-let photoX = 0;
-let photoY = 0;
-let photoZoom = 1;
+let drag = false;
+let sx = 0;
+let sy = 0;
+let spx = 0;
+let spy = 0;
 
 
-/*
-   Area bagian DALAM foto.
-   Bingkai asli akan digambar kembali setelah foto.
-*/
+/* =========================
+   RENDER
+========================= */
 
-const photoArea = {
-  x: 267,
-  y: 315,
-  width: 490,
-  height: 650
-};
+function render(){
+
+  vals.nama.textContent = inputs.nama.value;
+  vals.sekolah.textContent = inputs.sekolah.value;
+  vals.prodi.textContent = inputs.prodi.value;
+  vals.regu.textContent = inputs.regu.value;
+
+  /*
+    Gerakan foto dihitung dalam satuan canvas
+    1024 x 1536 dan diterjemahkan ke persen.
+  */
+
+  photo.style.transform =
+    `translate(calc(-50% + ${px / 10.24}%),
+               calc(-50% + ${py / 15.36}%))
+     scale(${zoom})`;
+
+  $("zoomOut").textContent =
+    zoom.toFixed(2) + "×";
+
+  $("xOut").textContent =
+    Math.round(px);
+
+  $("yOut").textContent =
+    Math.round(py);
+
+  empty.style.display =
+    photoUrl ? "none" : "block";
+}
 
 
-/*
-   Area luar bingkai.
-   Dipakai untuk mengembalikan bingkai/tape/
-   pinggiran kertas asli setelah foto digambar.
-*/
+/* =========================
+   TEXT
+========================= */
 
-const frameArea = {
-  x: 235,
-  y: 275,
-  width: 555,
-  height: 735
-};
+Object.values(inputs).forEach(input => {
+
+  input.addEventListener("input", render);
+
+});
 
 
-/* =========================================================
-   INPUT FOTO
-========================================================= */
+/* =========================
+   SLIDERS
+========================= */
 
-fotoInput.addEventListener("change", function(e){
+$("zoom").addEventListener("input", e => {
+
+  zoom = Number(e.target.value);
+
+  render();
+
+});
+
+
+$("x").addEventListener("input", e => {
+
+  px = Number(e.target.value);
+
+  render();
+
+});
+
+
+$("y").addEventListener("input", e => {
+
+  py = Number(e.target.value);
+
+  render();
+
+});
+
+
+/* =========================
+   FOTO
+========================= */
+
+$("photoInput").addEventListener("change", e => {
 
   const file = e.target.files[0];
 
   if(!file) return;
 
-  const reader = new FileReader();
+  photoUrl = URL.createObjectURL(file);
 
-  reader.onload = function(event){
+  photo.src = photoUrl;
 
-    userPhoto.onload = function(){
+  zoom = 1;
+  px = 0;
+  py = 0;
 
-      hasPhoto = true;
+  $("zoom").value = 1;
+  $("x").value = 0;
+  $("y").value = 0;
 
-      resetFoto();
-
-    };
-
-    userPhoto.src = event.target.result;
-
-  };
-
-  reader.readAsDataURL(file);
+  render();
 
 });
 
 
-/* =========================================================
-   TEXT INPUT
-========================================================= */
+/* =========================
+   TEMPLATE
+========================= */
 
-[
-  namaInput,
-  sekolahInput,
-  prodiInput,
-  reguInput
-].forEach(input => {
+$("templateInput").addEventListener("change", e => {
 
-  input.addEventListener("input", draw);
+  const file = e.target.files[0];
 
-});
+  if(!file) return;
 
+  const url = URL.createObjectURL(file);
 
-/* =========================================================
-   SLIDER
-========================================================= */
-
-zoomSlider.addEventListener("input", function(){
-
-  photoZoom = Number(this.value);
-
-  zoomValue.textContent = photoZoom.toFixed(2);
-
-  draw();
+  template.src = url;
 
 });
 
 
-offsetXSlider.addEventListener("input", function(){
-
-  photoX = Number(this.value);
-
-  xValue.textContent = photoX;
-
-  draw();
-
-});
-
-
-offsetYSlider.addEventListener("input", function(){
-
-  photoY = Number(this.value);
-
-  yValue.textContent = photoY;
-
-  draw();
-
-});
-
-
-/* =========================================================
+/* =========================
    RESET
-========================================================= */
+========================= */
 
-function resetFoto(){
+$("reset").onclick = () => {
 
-  photoX = 0;
-  photoY = 0;
-  photoZoom = 1;
+  zoom = 1;
+  px = 0;
+  py = 0;
 
-  zoomSlider.value = 1;
-  offsetXSlider.value = 0;
-  offsetYSlider.value = 0;
+  $("zoom").value = 1;
+  $("x").value = 0;
+  $("y").value = 0;
 
-  zoomValue.textContent = "1.00";
-  xValue.textContent = "0";
-  yValue.textContent = "0";
+  render();
 
-  draw();
+};
 
-}
 
+/* =========================
+   DRAG / TOUCH
+========================= */
 
-/* =========================================================
-   DRAW
-========================================================= */
+function pos(e){
 
-function draw(){
+  const r =
+    card.getBoundingClientRect();
 
-  if(!template.complete || !template.naturalWidth){
-
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    return;
-  }
-
-
-  /*
-     1. TEMPLATE ASLI
-  */
-
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  ctx.drawImage(
-    template,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-
-  /*
-     2. FOTO USER
-     Foto hanya boleh berada di area dalam frame.
-  */
-
-  if(hasPhoto && userPhoto.complete){
-
-    drawPhoto();
-
-  }
-
-
-  /*
-     3. KEMBALIKAN FRAME ASLI
-     Ini bagian penting agar foto tidak terlihat ditempel.
-  */
-
-  restoreFrame();
-
-
-  /*
-     4. EDIT TEXT
-  */
-
-  drawText();
-
-}
-
-
-/* =========================================================
-   DRAW FOTO
-========================================================= */
-
-function drawPhoto(){
-
-  ctx.save();
-
-  /*
-     Clip hanya bagian dalam foto.
-  */
-
-  ctx.beginPath();
-
-  ctx.rect(
-    photoArea.x,
-    photoArea.y,
-    photoArea.width,
-    photoArea.height
-  );
-
-  ctx.clip();
-
-
-  /*
-     Ukuran foto menyesuaikan cover.
-  */
-
-  const scale = Math.max(
-    photoArea.width / userPhoto.width,
-    photoArea.height / userPhoto.height
-  ) * photoZoom;
-
-
-  const drawWidth =
-    userPhoto.width * scale;
-
-  const drawHeight =
-    userPhoto.height * scale;
-
-
-  const centerX =
-    photoArea.x +
-    photoArea.width / 2 +
-    photoX;
-
-  const centerY =
-    photoArea.y +
-    photoArea.height / 2 +
-    photoY;
-
-
-  ctx.drawImage(
-    userPhoto,
-
-    centerX - drawWidth / 2,
-    centerY - drawHeight / 2,
-
-    drawWidth,
-    drawHeight
-  );
-
-
-  ctx.restore();
-
-}
-
-
-/* =========================================================
-   RESTORE FRAME
-========================================================= */
-
-function restoreFrame(){
-
-  ctx.save();
-
-  /*
-     Buat area berbentuk:
-     bingkai luar MINUS lubang foto.
-
-     Dengan begitu hanya bingkai asli yang
-     digambar ulang di atas foto.
-  */
-
-  ctx.beginPath();
-
-  ctx.rect(
-    frameArea.x,
-    frameArea.y,
-    frameArea.width,
-    frameArea.height
-  );
-
-  ctx.rect(
-    photoArea.x,
-    photoArea.y,
-    photoArea.width,
-    photoArea.height
-  );
-
-  ctx.clip("evenodd");
-
-
-  ctx.drawImage(
-    template,
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-  ctx.restore();
-
-}
-
-
-/* =========================================================
-   PAPER PATCH
-========================================================= */
-
-function paperPatch(x,y,w,h){
-
-  /*
-     Mengambil tekstur kertas kosong dari
-     bagian bawah panel template.
-
-     Jadi bukan warna putih polos.
-  */
-
-  ctx.drawImage(
-    template,
-
-    390,
-    1250,
-    410,
-    38,
-
-    x,
-    y,
-    w,
-    h
-  );
-
-}
-
-
-/* =========================================================
-   TEXT
-========================================================= */
-
-function drawText(){
-
-  /*
-     Tutup HANYA bagian nilai lama.
-
-     Label:
-     nama :
-     asal sekolah :
-     prodi :
-     nama regu :
-
-     tetap berasal dari template asli.
-  */
-
-  paperPatch(383,1028,435,42);
-  paperPatch(383,1076,435,42);
-  paperPatch(383,1124,435,42);
-  paperPatch(383,1172,435,42);
-
-
-  ctx.save();
-
-  ctx.fillStyle = "#151515";
-
-  /*
-     Font dibuat mendekati karakter tulisan
-     pada template.
-  */
-
-  ctx.font =
-    '700 29px Arial, sans-serif';
-
-  ctx.textBaseline = "middle";
-
-
-  /*
-     Nama
-  */
-
-  ctx.fillText(
-    namaInput.value,
-    394,
-    1049
-  );
-
-
-  /*
-     Asal sekolah
-  */
-
-  ctx.fillText(
-    sekolahInput.value,
-    394,
-    1097
-  );
-
-
-  /*
-     Prodi
-  */
-
-  ctx.fillText(
-    prodiInput.value,
-    394,
-    1145
-  );
-
-
-  /*
-     Nama regu
-  */
-
-  ctx.fillText(
-    reguInput.value,
-    394,
-    1193
-  );
-
-
-  ctx.restore();
-
-}
-
-
-/* =========================================================
-   DRAG FOTO
-========================================================= */
-
-let dragging = false;
-
-let startPointerX = 0;
-let startPointerY = 0;
-
-let startPhotoX = 0;
-let startPhotoY = 0;
-
-
-function pointerPosition(e){
-
-  const rect =
-    canvas.getBoundingClientRect();
-
-  const scaleX =
-    canvas.width / rect.width;
-
-  const scaleY =
-    canvas.height / rect.height;
-
-  let clientX;
-  let clientY;
-
-  if(e.touches){
-
-    clientX = e.touches[0].clientX;
-    clientY = e.touches[0].clientY;
-
-  }else{
-
-    clientX = e.clientX;
-    clientY = e.clientY;
-
-  }
+  const p =
+    e.touches ? e.touches[0] : e;
 
   return {
 
-    x:(clientX - rect.left) * scaleX,
+    x:
+      (p.clientX - r.left)
+      * 1024 / r.width,
 
-    y:(clientY - rect.top) * scaleY
+    y:
+      (p.clientY - r.top)
+      * 1536 / r.height
 
   };
 
 }
 
 
-/* mouse */
+function start(e){
 
-canvas.addEventListener("mousedown", function(e){
-
-  if(!hasPhoto) return;
-
-  const p = pointerPosition(e);
-
-  dragging = true;
-
-  startPointerX = p.x;
-  startPointerY = p.y;
-
-  startPhotoX = photoX;
-  startPhotoY = photoY;
-
-});
-
-
-window.addEventListener("mousemove", function(e){
-
-  if(!dragging) return;
-
-  const p = pointerPosition(e);
-
-  photoX =
-    startPhotoX +
-    (p.x - startPointerX);
-
-  photoY =
-    startPhotoY +
-    (p.y - startPointerY);
-
-  photoX =
-    Math.max(-350,Math.min(350,photoX));
-
-  photoY =
-    Math.max(-350,Math.min(350,photoY));
-
-  offsetXSlider.value = photoX;
-  offsetYSlider.value = photoY;
-
-  xValue.textContent =
-    Math.round(photoX);
-
-  yValue.textContent =
-    Math.round(photoY);
-
-  draw();
-
-});
-
-
-window.addEventListener("mouseup", function(){
-
-  dragging = false;
-
-});
-
-
-/* =========================================================
-   TOUCH
-========================================================= */
-
-canvas.addEventListener("touchstart", function(e){
-
-  if(!hasPhoto) return;
+  if(!photoUrl) return;
 
   e.preventDefault();
 
-  const p = pointerPosition(e);
+  drag = true;
 
-  dragging = true;
+  const p = pos(e);
 
-  startPointerX = p.x;
-  startPointerY = p.y;
+  sx = p.x;
+  sy = p.y;
 
-  startPhotoX = photoX;
-  startPhotoY = photoY;
-
-},{passive:false});
-
-
-canvas.addEventListener("touchmove", function(e){
-
-  if(!dragging) return;
-
-  e.preventDefault();
-
-  const p = pointerPosition(e);
-
-  photoX =
-    startPhotoX +
-    (p.x - startPointerX);
-
-  photoY =
-    startPhotoY +
-    (p.y - startPointerY);
-
-  photoX =
-    Math.max(-350,Math.min(350,photoX));
-
-  photoY =
-    Math.max(-350,Math.min(350,photoY));
-
-  offsetXSlider.value = photoX;
-  offsetYSlider.value = photoY;
-
-  xValue.textContent =
-    Math.round(photoX);
-
-  yValue.textContent =
-    Math.round(photoY);
-
-  draw();
-
-},{passive:false});
-
-
-canvas.addEventListener("touchend", function(){
-
-  dragging = false;
-
-});
-
-
-/* =========================================================
-   DOWNLOAD
-========================================================= */
-
-function downloadPNG(){
-
-  /*
-     Pastikan gambar terakhir sudah dirender.
-  */
-
-  draw();
-
-  const link =
-    document.createElement("a");
-
-  link.download =
-    "PKKMB-2026-NameTag.png";
-
-  link.href =
-    canvas.toDataURL("image/png");
-
-  link.click();
+  spx = px;
+  spy = py;
 
 }
 
 
-/* =========================================================
-   INITIAL DRAW
-========================================================= */
+function move(e){
 
-draw();
+  if(!drag) return;
+
+  e.preventDefault();
+
+  const p = pos(e);
+
+  px = Math.max(
+    -350,
+    Math.min(
+      350,
+      spx + p.x - sx
+    )
+  );
+
+  py = Math.max(
+    -350,
+    Math.min(
+      350,
+      spy + p.y - sy
+    )
+  );
+
+  $("x").value = px;
+  $("y").value = py;
+
+  render();
+
+}
+
+
+function end(){
+
+  drag = false;
+
+}
+
+
+card.addEventListener(
+  "mousedown",
+  start
+);
+
+window.addEventListener(
+  "mousemove",
+  move
+);
+
+window.addEventListener(
+  "mouseup",
+  end
+);
+
+
+card.addEventListener(
+  "touchstart",
+  start,
+  {passive:false}
+);
+
+card.addEventListener(
+  "touchmove",
+  move,
+  {passive:false}
+);
+
+card.addEventListener(
+  "touchend",
+  end
+);
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+$("download").onclick = async () => {
+
+  const old =
+    empty.style.display;
+
+  empty.style.display = "none";
+
+  await document.fonts.ready;
+
+  const canvas =
+    await html2canvas(
+      card,
+      {
+        scale:2,
+        useCORS:true,
+        backgroundColor:null
+      }
+    );
+
+  const a =
+    document.createElement("a");
+
+  a.download =
+    "PKKMB-2026-NameTag.png";
+
+  a.href =
+    canvas.toDataURL("image/png");
+
+  a.click();
+
+  empty.style.display = old;
+
+};
+
+
+/* =========================
+   INITIAL
+========================= */
+
+render();
 
 </script>
 
