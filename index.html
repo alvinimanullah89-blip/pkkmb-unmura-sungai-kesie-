@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKKMB UNMURA 2026</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  padding:15px;
+  background:#111;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+}
+
+h2{
+  margin:5px 0 15px;
+}
+
+canvas{
+  display:block;
+  width:100%;
+  max-width:520px;
+  height:auto;
+  margin:15px auto;
+  border-radius:10px;
+}
+
+.panel{
+  max-width:520px;
+  margin:auto;
+  background:#222;
+  padding:15px;
+  border-radius:12px;
+}
+
+button{
+  border:0;
+  border-radius:8px;
+  padding:11px 16px;
+  margin:5px;
+  font-size:15px;
+  font-weight:bold;
+}
+
+label{
+  display:block;
+  margin:12px 0;
+}
+
+input[type="range"]{
+  width:75%;
+}
+</style>
+</head>
+
+<body>
+
+<h2>PKKMB UNMURA 2026</h2>
+
+<div class="panel">
+
+<input id="foto" type="file" accept="image/*">
+
+<div id="kontrol" style="display:none">
+
+<label>
+Zoom
+<input id="zoom" type="range" min="0.5" max="2.5" step="0.01" value="1">
+</label>
+
+<label>
+Kiri / Kanan
+<input id="geserX" type="range" min="-250" max="250" value="0">
+</label>
+
+<label>
+Atas / Bawah
+<input id="geserY" type="range" min="-300" max="300" value="0">
+</label>
+
+<button onclick="resetFoto()">Reset</button>
+
+<button onclick="downloadPNG()">Download PNG</button>
+
+</div>
+</div>
+
+<canvas id="canvas" width="1024" height="1536"></canvas>
+
+<script>
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const fotoInput = document.getElementById("foto");
+const zoomInput = document.getElementById("zoom");
+const geserX = document.getElementById("geserX");
+const geserY = document.getElementById("geserY");
+const kontrol = document.getElementById("kontrol");
+
+const template = new Image();
+
+/* NAMA FILE TEMPLATE KAMU */
+template.src = "8B740CBE-CECD-44A7-A31E-067C7C106C3D.png";
+
+let foto = new Image();
+let fotoAda = false;
+
+/*
+  AREA FOTO
+*/
+const areaFoto = {
+  x: 268,
+  y: 338,
+  width: 486,
+  height: 627
+};
+
+template.onload = function(){
+  gambar();
+};
+
+fotoInput.addEventListener("change", function(e){
+
+  const file = e.target.files[0];
+
+  if(!file) return;
+
+  foto.onload = function(){
+
+    fotoAda = true;
+    kontrol.style.display = "block";
+
+    gambar();
+  };
+
+  foto.src = URL.createObjectURL(file);
+
+});
+
+zoomInput.addEventListener("input", gambar);
+geserX.addEventListener("input", gambar);
+geserY.addEventListener("input", gambar);
+
+
+function gambar(){
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  /* gambar template */
+  ctx.drawImage(
+    template,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  if(!fotoAda) return;
+
+  /*
+    CLIP AREA FOTO
+  */
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  ctx.rect(
+    areaFoto.x,
+    areaFoto.y,
+    areaFoto.width,
+    areaFoto.height
+  );
+
+  ctx.clip();
+
+  /*
+    ukuran foto
+  */
+
+  const skalaDasar = Math.max(
+    areaFoto.width / foto.width,
+    areaFoto.height / foto.height
+  );
+
+  const skala = skalaDasar * Number(zoomInput.value);
+
+  const lebar = foto.width * skala;
+  const tinggi = foto.height * skala;
+
+  const x =
+    areaFoto.x +
+    (areaFoto.width - lebar) / 2 +
+    Number(geserX.value);
+
+  const y =
+    areaFoto.y +
+    (areaFoto.height - tinggi) / 2 +
+    Number(geserY.value);
+
+  ctx.drawImage(
+    foto,
+    x,
+    y,
+    lebar,
+    tinggi
+  );
+
+  ctx.restore();
+}
+
+
+function resetFoto(){
+
+  zoomInput.value = 1;
+  geserX.value = 0;
+  geserY.value = 0;
+
+  gambar();
+}
+
+
+function downloadPNG(){
+
+  const link = document.createElement("a");
+
+  link.download =
+    "PKKMB_UNMURA_2026_Sungai_Kesie.png";
+
+  link.href = canvas.toDataURL("image/png");
+
+  link.click();
+}
+
+</script>
+
+</body>
+</html>
