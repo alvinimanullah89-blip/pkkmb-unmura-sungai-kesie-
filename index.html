@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PKKMB 2026 - Name Tag UNMURA</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: #07120e;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: min(100%, 700px);
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: 22px;
+}
+
+.preview-wrap {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #111;
+}
+
+#preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1024 / 1536;
+    overflow: hidden;
+}
+
+/* =========================
+   TEMPLATE ASLI
+   ========================= */
+
+#template {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+/* =========================
+   AREA FOTO
+   ========================= */
+
+.photo-area {
+    position: absolute;
+
+    left: 23.83%;
+    top: 20.31%;
+    width: 50.78%;
+    height: 44.27%;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+}
+
+/*
+ FOTO TIDAK DI-ZOOM.
+ Foto menyesuaikan area tanpa dipotong.
+*/
+#userPhoto {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+    object-position: center center;
+
+    display: none;
+}
+
+.photo-button {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 13px 24px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #666;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.photo-button:hover {
+    background: #555;
+}
+
+#photoInput {
+    display: none;
+}
+
+
+/* =========================
+   TEKS NAME TAG
+   SEMUA 13PX
+   ========================= */
+
+.value {
+    position: absolute;
+
+    z-index: 3;
+
+    /*
+    Titik dua pada template berada
+    sebelum posisi teks.
+    */
+    left: 36.15%;
+
+    width: 53%;
+
+    font-family: "Montserrat", sans-serif;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #111;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    margin: 0;
+    padding: 0;
+
+    transform: translateY(-50%);
+}
+
+
+/*
+ Nama
+*/
+#nameValue {
+    top: 68.30%;
+}
+
+
+/*
+ Asal sekolah
+*/
+#schoolValue {
+    top: 72.15%;
+}
+
+
+/*
+ Prodi
+*/
+#prodiValue {
+    top: 76.05%;
+}
+
+
+/*
+ Nama regu
+*/
+#teamValue {
+    top: 79.95%;
+}
+
+
+/* =========================
+   FORM EDITOR
+   ========================= */
+
+.editor {
+    margin-top: 25px;
+
+    padding: 20px;
+
+    background: #0d211a;
+
+    border: 1px solid #193c2e;
+
+    border-radius: 14px;
+}
+
+.editor h2 {
+    margin: 0 0 18px;
+
+    font-size: 18px;
+}
+
+.field {
+    margin-bottom: 14px;
+}
+
+.field label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-weight: 600;
+}
+
+.field input {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid #355448;
+
+    border-radius: 8px;
+
+    background: #08150f;
+
+    color: white;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.field input:focus {
+    border-color: #e9c400;
+}
+
+.photo-input {
+    margin-bottom: 18px;
+}
+
+.photo-input button {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #e9c400;
+
+    color: #111;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.download {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #16834f;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.download:hover {
+    background: #126b41;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>PKKMB 2026 - Name Tag UNMURA</h1>
+
+
+    <!-- =========================
+         PREVIEW
+         ========================= -->
+
+    <div class="preview-wrap">
+
+        <div id="preview">
+
+            <!--
+            TEMPLATE ASLI.
+            JANGAN RENAME FILE.
+
+            File harus berada satu folder
+            dengan index.html.
+            -->
+
+            <img
+                id="template"
+                src="56C7BC53-1F20-42B6-8FD8-189759577A61.jpeg"
+                alt="Template PKKMB UNMURA"
+            >
+
+
+            <!-- =========================
+                 FOTO
+                 ========================= -->
+
+            <div class="photo-area">
+
+                <img
+                    id="userPhoto"
+                    alt="Foto peserta"
+                >
+
+                <button
+                    class="photo-button"
+                    type="button"
+                    onclick="document.getElementById('photoInput').click()"
+                >
+                    Pilih foto untuk mulai
+                </button>
+
+            </div>
+
+
+            <!-- =========================
+                 TEKS
+                 ========================= -->
+
+            <div id="nameValue" class="value"></div>
+
+            <div id="schoolValue" class="value"></div>
+
+            <div id="prodiValue" class="value"></div>
+
+            <div id="teamValue" class="value"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DATA PESERTA
+         ========================= -->
+
+    <div class="editor">
+
+        <h2>DATA PESERTA</h2>
+
+
+        <!-- FOTO -->
+
+        <div class="photo-input">
+
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/*"
+            >
+
+            <button
+                type="button"
+                onclick="document.getElementById('photoInput').click()"
+            >
+                Pilih Foto
+            </button>
+
+        </div>
+
+
+        <!-- NAMA -->
+
+        <div class="field">
+
+            <label>Nama</label>
+
+            <input
+                id="nameInput"
+                type="text"
+                placeholder="Masukkan nama"
+            >
+
+        </div>
+
+
+        <!-- ASAL SEKOLAH -->
+
+        <div class="field">
+
+            <label>Asal Sekolah</label>
+
+            <input
+                id="schoolInput"
+                type="text"
+                placeholder="Masukkan asal sekolah"
+            >
+
+        </div>
+
+
+        <!-- PRODI -->
+
+        <div class="field">
+
+            <label>Prodi</label>
+
+            <input
+                id="prodiInput"
+                type="text"
+                placeholder="Masukkan prodi"
+            >
+
+        </div>
+
+
+        <!-- NAMA REGU -->
+
+        <div class="field">
+
+            <label>Nama Regu</label>
+
+            <input
+                id="teamInput"
+                type="text"
+                placeholder="Masukkan nama regu"
+            >
+
+        </div>
+
+
+        <button
+            class="download"
+            type="button"
+            onclick="downloadImage()"
+        >
+            Simpan Name Tag
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =========================
+   TEKS
+   ========================= */
+
+const nameInput =
+    document.getElementById("nameInput");
+
+const schoolInput =
+    document.getElementById("schoolInput");
+
+const prodiInput =
+    document.getElementById("prodiInput");
+
+const teamInput =
+    document.getElementById("teamInput");
+
+
+const nameValue =
+    document.getElementById("nameValue");
+
+const schoolValue =
+    document.getElementById("schoolValue");
+
+const prodiValue =
+    document.getElementById("prodiValue");
+
+const teamValue =
+    document.getElementById("teamValue");
+
+
+nameInput.addEventListener("input", function () {
+
+    nameValue.textContent = this.value;
+
+});
+
+
+schoolInput.addEventListener("input", function () {
+
+    schoolValue.textContent = this.value;
+
+});
+
+
+prodiInput.addEventListener("input", function () {
+
+    prodiValue.textContent = this.value;
+
+});
+
+
+teamInput.addEventListener("input", function () {
+
+    teamValue.textContent = this.value;
+
+});
+
+
+
+/* =========================
+   FOTO
+   ========================= */
+
+const photoInput =
+    document.getElementById("photoInput");
+
+const userPhoto =
+    document.getElementById("userPhoto");
+
+const photoButton =
+    document.querySelector(".photo-button");
+
+
+photoInput.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+
+    const reader = new FileReader();
+
+
+    reader.onload = function (event) {
+
+        userPhoto.src =
+            event.target.result;
+
+        userPhoto.style.display =
+            "block";
+
+        photoButton.style.display =
+            "none";
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+});
+
+
+
+/* =========================
+   DOWNLOAD
+   ========================= */
+
+async function downloadImage() {
+
+    const preview =
+        document.getElementById("preview");
+
+
+    if (typeof html2canvas === "undefined") {
+
+        alert(
+            "Tunggu sampai halaman selesai dimuat."
+        );
+
+        return;
+    }
+
+
+    const canvas =
+        await html2canvas(preview, {
+
+            scale: 2,
+
+            useCORS: true,
+
+            backgroundColor: null
+
+        });
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.download =
+        "PKKMB-2026-UNMURA.png";
+
+
+    link.href =
+        canvas.toDataURL("image/png");
+
+
+    link.click();
+
+}
+
+</script>
+
+
+<!-- HTML2CANVAS -->
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+</script>
+
+
+</body>
+</html>
