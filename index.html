@@ -1,649 +1,337 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>PKKMB 2026 - Name Tag UNMURA</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 20px;
-    background: #07120e;
-    color: white;
-    font-family: Arial, sans-serif;
-}
-
-.container {
-    width: min(100%, 700px);
-    margin: auto;
-}
-
-h1 {
-    text-align: center;
-    margin: 0 0 20px;
-    font-size: 22px;
-}
-
-.preview-wrap {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #111;
-}
-
-#preview {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1024 / 1536;
-    overflow: hidden;
-}
-
-/* =========================
-   TEMPLATE ASLI
-   ========================= */
-
-#template {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    z-index: 1;
-    pointer-events: none;
-}
-
-
-/* =========================
-   AREA FOTO
-   ========================= */
-
-.photo-area {
-    position: absolute;
-
-    left: 23.83%;
-    top: 20.31%;
-    width: 50.78%;
-    height: 44.27%;
-
-    z-index: 2;
-
-    overflow: hidden;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: transparent;
-}
-
-/*
- FOTO TIDAK DI-ZOOM.
- Foto menyesuaikan area tanpa dipotong.
-*/
-#userPhoto {
-    width: 100%;
-    height: 100%;
-
-    object-fit: contain;
-    object-position: center center;
-
-    display: none;
-}
-
-.photo-button {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    padding: 13px 24px;
-
-    border: none;
-    border-radius: 12px;
-
-    background: #666;
-    color: white;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    white-space: nowrap;
-}
-
-.photo-button:hover {
-    background: #555;
-}
-
-#photoInput {
-    display: none;
-}
-
-
-/* =========================
-   TEKS NAME TAG
-   SEMUA 13PX
-   ========================= */
-
-.value {
-    position: absolute;
-
-    z-index: 3;
-
-    /*
-    Titik dua pada template berada
-    sebelum posisi teks.
-    */
-    left: 36.15%;
-
-    width: 53%;
-
-    font-family: "Montserrat", sans-serif;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    color: #111;
-
-    line-height: 1;
-
-    white-space: nowrap;
-
-    margin: 0;
-    padding: 0;
-
-    transform: translateY(-50%);
-}
-
-
-/*
- Nama
-*/
-#nameValue {
-    top: 68.30%;
-}
-
-
-/*
- Asal sekolah
-*/
-#schoolValue {
-    top: 72.15%;
-}
-
-
-/*
- Prodi
-*/
-#prodiValue {
-    top: 76.05%;
-}
-
-
-/*
- Nama regu
-*/
-#teamValue {
-    top: 79.95%;
-}
-
-
-/* =========================
-   FORM EDITOR
-   ========================= */
-
-.editor {
-    margin-top: 25px;
-
-    padding: 20px;
-
-    background: #0d211a;
-
-    border: 1px solid #193c2e;
-
-    border-radius: 14px;
-}
-
-.editor h2 {
-    margin: 0 0 18px;
-
-    font-size: 18px;
-}
-
-.field {
-    margin-bottom: 14px;
-}
-
-.field label {
-    display: block;
-
-    margin-bottom: 6px;
-
-    font-weight: 600;
-}
-
-.field input {
-    width: 100%;
-
-    padding: 12px;
-
-    border: 1px solid #355448;
-
-    border-radius: 8px;
-
-    background: #08150f;
-
-    color: white;
-
-    font-size: 15px;
-
-    outline: none;
-}
-
-.field input:focus {
-    border-color: #e9c400;
-}
-
-.photo-input {
-    margin-bottom: 18px;
-}
-
-.photo-input button {
-    width: 100%;
-
-    padding: 12px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #e9c400;
-
-    color: #111;
-
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-.download {
-    width: 100%;
-
-    margin-top: 8px;
-
-    padding: 13px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #16834f;
-
-    color: white;
-
-    font-size: 15px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-.download:hover {
-    background: #126b41;
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Twibbon PKKMB 2026</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            justify-content: center;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+        }
+        .canvas-container {
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 600px;
+            cursor: grab;
+        }
+        canvas:active {
+            cursor: grabbing;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label {
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+        }
+        input[type="text"], input[type="file"], input[type="range"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .btn {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .btn-download {
+            background-color: #28a745;
+            margin-top: 10px;
+        }
+        .btn-download:hover {
+            background-color: #218838;
+        }
+        .info-box {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            border: 1px solid #ffeeba;
+        }
+    </style>
 </head>
-
-
 <body>
 
-<div class="container">
+    <div class="info-box">
+        <strong>Penting:</strong> Pastikan file template Anda bernama <code>image.png</code> dan berada di satu folder dengan file ini. Bagian tengah template (tempat foto) harus sudah transparan agar foto dapat terlihat.
+    </div>
 
-    <h1>PKKMB 2026 - Name Tag UNMURA</h1>
-
-
-    <!-- =========================
-         PREVIEW
-         ========================= -->
-
-    <div class="preview-wrap">
-
-        <div id="preview">
-
-            <!--
-            TEMPLATE ASLI.
-            JANGAN RENAME FILE.
-
-            File harus berada satu folder
-            dengan index.html.
-            -->
-
-            <img
-                id="template"
-                src="56C7BC53-1F20-42B6-8FD8-189759577A61.jpeg"
-                alt="Template PKKMB UNMURA"
-            >
-
-
-            <!-- =========================
-                 FOTO
-                 ========================= -->
-
-            <div class="photo-area">
-
-                <img
-                    id="userPhoto"
-                    alt="Foto peserta"
-                >
-
-                <button
-                    class="photo-button"
-                    type="button"
-                    onclick="document.getElementById('photoInput').click()"
-                >
-                    Pilih foto untuk mulai
-                </button>
-
+    <div class="container">
+        <!-- Panel Kontrol -->
+        <div class="controls">
+            <h3>Pengaturan Data & Foto</h3>
+            
+            <div class="input-group">
+                <label>Unggah Foto Anda:</label>
+                <input type="file" id="upload-photo" accept="image/png, image/jpeg, image/jpg">
             </div>
 
+            <div class="input-group">
+                <label>Ukuran Foto (Zoom):</label>
+                <input type="range" id="scale-photo" min="0.1" max="3" step="0.01" value="1">
+            </div>
 
-            <!-- =========================
-                 TEKS
-                 ========================= -->
+            <div class="input-group">
+                <label>Nama:</label>
+                <input type="text" id="input-nama" placeholder="Masukkan Nama" oninput="drawCanvas()">
+            </div>
 
-            <div id="nameValue" class="value"></div>
+            <div class="input-group">
+                <label>Asal Sekolah:</label>
+                <input type="text" id="input-sekolah" placeholder="Masukkan Asal Sekolah" oninput="drawCanvas()">
+            </div>
 
-            <div id="schoolValue" class="value"></div>
+            <div class="input-group">
+                <label>Prodi:</label>
+                <input type="text" id="input-prodi" placeholder="Masukkan Prodi" oninput="drawCanvas()">
+            </div>
 
-            <div id="prodiValue" class="value"></div>
+            <div class="input-group">
+                <label>Nama Regu:</label>
+                <input type="text" id="input-regu" placeholder="Masukkan Nama Regu" oninput="drawCanvas()">
+            </div>
 
-            <div id="teamValue" class="value"></div>
+            <div class="input-group">
+                <label>Ukuran Font Teks:</label>
+                <input type="range" id="font-size" min="10" max="60" step="1" value="28">
+            </div>
 
+            <button class="btn btn-download" onclick="downloadImage()">Unduh Twibbon</button>
         </div>
 
+        <!-- Area Preview Canvas -->
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
 
-
-    <!-- =========================
-         DATA PESERTA
-         ========================= -->
-
-    <div class="editor">
-
-        <h2>DATA PESERTA</h2>
-
-
-        <!-- FOTO -->
-
-        <div class="photo-input">
-
-            <input
-                id="photoInput"
-                type="file"
-                accept="image/*"
-            >
-
-            <button
-                type="button"
-                onclick="document.getElementById('photoInput').click()"
-            >
-                Pilih Foto
-            </button>
-
-        </div>
-
-
-        <!-- NAMA -->
-
-        <div class="field">
-
-            <label>Nama</label>
-
-            <input
-                id="nameInput"
-                type="text"
-                placeholder="Masukkan nama"
-            >
-
-        </div>
-
-
-        <!-- ASAL SEKOLAH -->
-
-        <div class="field">
-
-            <label>Asal Sekolah</label>
-
-            <input
-                id="schoolInput"
-                type="text"
-                placeholder="Masukkan asal sekolah"
-            >
-
-        </div>
-
-
-        <!-- PRODI -->
-
-        <div class="field">
-
-            <label>Prodi</label>
-
-            <input
-                id="prodiInput"
-                type="text"
-                placeholder="Masukkan prodi"
-            >
-
-        </div>
-
-
-        <!-- NAMA REGU -->
-
-        <div class="field">
-
-            <label>Nama Regu</label>
-
-            <input
-                id="teamInput"
-                type="text"
-                placeholder="Masukkan nama regu"
-            >
-
-        </div>
-
-
-        <button
-            class="download"
-            type="button"
-            onclick="downloadImage()"
-        >
-            Simpan Name Tag
-        </button>
-
-    </div>
-
-</div>
-
-
-
-<script>
-
-/* =========================
-   TEKS
-   ========================= */
-
-const nameInput =
-    document.getElementById("nameInput");
-
-const schoolInput =
-    document.getElementById("schoolInput");
-
-const prodiInput =
-    document.getElementById("prodiInput");
-
-const teamInput =
-    document.getElementById("teamInput");
-
-
-const nameValue =
-    document.getElementById("nameValue");
-
-const schoolValue =
-    document.getElementById("schoolValue");
-
-const prodiValue =
-    document.getElementById("prodiValue");
-
-const teamValue =
-    document.getElementById("teamValue");
-
-
-nameInput.addEventListener("input", function () {
-
-    nameValue.textContent = this.value;
-
-});
-
-
-schoolInput.addEventListener("input", function () {
-
-    schoolValue.textContent = this.value;
-
-});
-
-
-prodiInput.addEventListener("input", function () {
-
-    prodiValue.textContent = this.value;
-
-});
-
-
-teamInput.addEventListener("input", function () {
-
-    teamValue.textContent = this.value;
-
-});
-
-
-
-/* =========================
-   FOTO
-   ========================= */
-
-const photoInput =
-    document.getElementById("photoInput");
-
-const userPhoto =
-    document.getElementById("userPhoto");
-
-const photoButton =
-    document.querySelector(".photo-button");
-
-
-photoInput.addEventListener("change", function () {
-
-    const file = this.files[0];
-
-    if (!file) return;
-
-
-    const reader = new FileReader();
-
-
-    reader.onload = function (event) {
-
-        userPhoto.src =
-            event.target.result;
-
-        userPhoto.style.display =
-            "block";
-
-        photoButton.style.display =
-            "none";
-
-    };
-
-
-    reader.readAsDataURL(file);
-
-});
-
-
-
-/* =========================
-   DOWNLOAD
-   ========================= */
-
-async function downloadImage() {
-
-    const preview =
-        document.getElementById("preview");
-
-
-    if (typeof html2canvas === "undefined") {
-
-        alert(
-            "Tunggu sampai halaman selesai dimuat."
-        );
-
-        return;
-    }
-
-
-    const canvas =
-        await html2canvas(preview, {
-
-            scale: 2,
-
-            useCORS: true,
-
-            backgroundColor: null
-
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Element Inputs
+        const inputNama = document.getElementById('input-nama');
+        const inputSekolah = document.getElementById('input-sekolah');
+        const inputProdi = document.getElementById('input-prodi');
+        const inputRegu = document.getElementById('input-regu');
+        const scalePhoto = document.getElementById('scale-photo');
+        const fontSizeSlider = document.getElementById('font-size');
+        const uploadPhoto = document.getElementById('upload-photo');
+
+        // Images
+        const templateImg = new Image();
+        templateImg.src = 'image.png'; // Merujuk langsung ke file template
+
+        const userImg = new Image();
+        
+        // State Variabel
+        let imgX = 0;
+        let imgY = 0;
+        let scale = 1;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+
+        // Inisialisasi Ukuran Canvas saat template dimuat
+        templateImg.onload = () => {
+            canvas.width = templateImg.width;
+            canvas.height = templateImg.height;
+            drawCanvas();
+        };
+
+        templateImg.onerror = () => {
+            alert("Gagal memuat image.png. Pastikan file image.png ada di folder yang sama!");
+        };
+
+        // Fungsi menggambar seluruh komponen ke Canvas
+        function drawCanvas() {
+            if (!templateImg.complete) return;
+
+            // Bersihkan kanvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Gambar Foto User (Di Bawah Template)
+            if (userImg.src && userImg.complete) {
+                const drawWidth = userImg.width * scale;
+                const drawHeight = userImg.height * scale;
+                ctx.drawImage(userImg, imgX, imgY, drawWidth, drawHeight);
+            }
+
+            // 2. Gambar Template
+            ctx.drawImage(templateImg, 0, 0, canvas.width, canvas.height);
+
+            // 3. Gambar Teks
+            const fontSize = fontSizeSlider.value;
+            ctx.font = `bold ${fontSize}px "Segoe UI", Arial, sans-serif`;
+            ctx.fillStyle = "#000000"; // Warna teks hitam
+            ctx.textBaseline = "middle";
+
+            // Kordinat X dan Y disesuaikan dengan proporsi template (Estimasi)
+            const textX = canvas.width * 0.38; // Posisi sebelah kanan titik dua (:)
+            const namaY = canvas.height * 0.686;
+            const sekolahY = canvas.height * 0.723;
+            const prodiY = canvas.height * 0.762;
+            const reguY = canvas.height * 0.800;
+
+            ctx.fillText(inputNama.value, textX, namaY);
+            ctx.fillText(inputSekolah.value, textX, sekolahY);
+            ctx.fillText(inputProdi.value, textX, prodiY);
+            ctx.fillText(inputRegu.value, textX, reguY);
+        }
+
+        // --- Event Listeners ---
+
+        // Mengunggah Foto
+        uploadPhoto.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    userImg.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
         });
 
+        // Saat foto berhasil dimuat
+        userImg.onload = () => {
+            // Tengahkan foto secara default
+            scale = canvas.width / userImg.width;
+            if (userImg.height * scale < canvas.height) {
+                scale = canvas.height / userImg.height;
+            }
+            scalePhoto.value = scale;
+            imgX = (canvas.width - (userImg.width * scale)) / 2;
+            imgY = (canvas.height - (userImg.height * scale)) / 2;
+            drawCanvas();
+        };
 
-    const link =
-        document.createElement("a");
+        // Slider Zoom Foto
+        scalePhoto.addEventListener('input', (e) => {
+            scale = parseFloat(e.target.value);
+            drawCanvas();
+        });
 
+        // Slider Ukuran Font
+        fontSizeSlider.addEventListener('input', drawCanvas);
 
-    link.download =
-        "PKKMB-2026-UNMURA.png";
+        // Fitur Geser (Drag) Foto di Canvas
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            const rect = canvas.getBoundingClientRect();
+            // Menyesuaikan rasio tampilan canvas dengan ukuran aslinya
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            startX = (e.clientX - rect.left) * scaleX - imgX;
+            startY = (e.clientY - rect.top) * scaleY - imgY;
+        });
 
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
 
-    link.href =
-        canvas.toDataURL("image/png");
+            const mouseX = (e.clientX - rect.left) * scaleX;
+            const mouseY = (e.clientY - rect.top) * scaleY;
 
+            imgX = mouseX - startX;
+            imgY = mouseY - startY;
+            drawCanvas();
+        });
 
-    link.click();
+        canvas.addEventListener('mouseup', () => { isDragging = false; });
+        canvas.addEventListener('mouseleave', () => { isDragging = false; });
 
-}
+        // Mendukung layar sentuh (Touch) untuk HP
+        canvas.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            startX = (e.touches[0].clientX - rect.left) * scaleX - imgX;
+            startY = (e.touches[0].clientY - rect.top) * scaleY - imgY;
+        }, {passive: true});
 
-</script>
+        canvas.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
 
+            const touchX = (e.touches[0].clientX - rect.left) * scaleX;
+            const touchY = (e.touches[0].clientY - rect.top) * scaleY;
 
-<!-- HTML2CANVAS -->
+            imgX = touchX - startX;
+            imgY = touchY - startY;
+            drawCanvas();
+            e.preventDefault(); // Mencegah scroll saat menggeser foto
+        }, {passive: false});
 
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
-</script>
+        canvas.addEventListener('touchend', () => { isDragging = false; });
 
-
+        // --- Fungsi Unduh ---
+        function downloadImage() {
+            if (!templateImg.complete) {
+                alert("Template belum termuat sempurna.");
+                return;
+            }
+            const link = document.createElement('a');
+            link.download = 'Twibbon-PKKMB-' + (inputNama.value || '2026') + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
 </body>
 </html>
